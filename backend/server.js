@@ -26,6 +26,11 @@ const uploads = multer({ dest: "uploads/" })
 
 const port = 5000;
 app.use(express.json());
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self';");
+  next();
+});
+
 
 const whitelist = [
   'http://localhost:3000',
@@ -1064,6 +1069,6 @@ Format the response as a **valid JSON object** with the following keys:
   }
 }
 
-app.listen(port, () => {
+app.listen(port,'0.0.0.0', () => {
   console.log(`Live at port ${port}`);
 });
